@@ -97,7 +97,7 @@ class _ResultsState extends State<Results> {
               padding: const EdgeInsets.symmetric(horizontal: 35),
               child: Text(widget.mode == MODE.lci
                   ? 'Para um lucro igual com CDB seria necessário uma rentabilidade de ${(widget.formInfo['rentability'] / (1 - irPercentage) * 100).toStringAsFixed(2)} %.'
-                  : 'Para um lucro igual com LCI seria necessário uma rentabilidade de ${((widget.formInfo['rentability'] - (widget.formInfo['rentability'] * irPercentage)) * 100).toStringAsFixed(2)} %.'),
+                  : 'Para um lucro igual com LCI seria necessário uma rentabilidade de ${((widget.formInfo['rentability'] * (1 - irPercentage)) * 100).toStringAsFixed(2)} %.'),
             ),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 35),
