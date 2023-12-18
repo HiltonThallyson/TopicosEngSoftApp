@@ -15,8 +15,13 @@ class _FiisState extends State<FiisResults> {
   double rentability = 0.0;
 
   double profit = 0.0;
+  double profitPerQuote = 0.0;
+  double profitPerQuoteMontly = 0.0;
 
   double finalValue = 0.0;
+
+  int cotaQuantity = 0;
+  double cotaValue = 0.0;
 
   @override
   void initState() {
@@ -30,10 +35,11 @@ class _FiisState extends State<FiisResults> {
 
   void calculateResults() {
     rentability = widget.formInfo['rentability'];
+    profitPerQuote = widget.formInfo['cotaValue'] * rentability;
+    profitPerQuoteMontly = widget.formInfo['cotaValue'] * rentability / 12;
+    profit = profitPerQuote * widget.formInfo['cotaQuantity'];
 
-    profit = widget.formInfo['value'] * rentability * widget.formInfo['period'];
-
-    finalValue = widget.formInfo['value'] + profit;
+    cotaQuantity = widget.formInfo['cotaQuantity'];
   }
 
   @override
@@ -45,12 +51,16 @@ class _FiisState extends State<FiisResults> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Valor investido: R\$ ${widget.formInfo['value']}',
+              'Valor total investido: R\$ ${widget.formInfo['cotaQuantity'] * widget.formInfo['cotaValue']}',
               style: const TextStyle(fontSize: 22, color: Colors.green),
             ),
             Text(
-              'Duração: ${widget.formInfo['period']} ${widget.formInfo['period'] == 1 ? 'ano' : 'anos'}',
-              style: const TextStyle(fontSize: 18),
+              'Valor da cota: R\$ ${widget.formInfo['cotaValue']}',
+              style: const TextStyle(fontSize: 18, color: Colors.blue),
+            ),
+            Text(
+              'Quantidade de cotas: ${widget.formInfo['cotaQuantity']}',
+              style: const TextStyle(fontSize: 18, color: Colors.black),
             ),
             const SizedBox(
               height: 15,
@@ -63,13 +73,36 @@ class _FiisState extends State<FiisResults> {
                 child: Column(
                   children: [
                     Text(
-                        'Rentabilidade: ${(widget.formInfo['rentability'] * 100).toStringAsFixed(2)} %'),
+                        'Rentabilidade anual por cota: ${(widget.formInfo['rentability'] * 100).toStringAsFixed(2)} %'),
                     Text(
-                        'Lucro liquido anual: R\$ ${(profit).toStringAsFixed(2)}'),
-                    Text('Valor final: R\$ ${finalValue.toStringAsFixed(2)}'),
+                      'Lucro liquido anual por cota: R\$ ${(profitPerQuote).toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.green),
+                    ),
+                    Text(
+                      'Lucro liquido mensal por cota: R\$ ${(profitPerQuoteMontly).toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.green),
+                    ),
+                    Text(
+                      'Renda mensal: R\$ ${(profit / 12).toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.blue),
+                    ),
+                    Text(
+                      'Lucro liquido anual: R\$ ${(profit).toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.blue),
+                    ),
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Para um rendimento mensal aproximada de R\$ ${widget.formInfo['mensalValue']}, com rendimento mensal de R\$ ${(profitPerQuoteMontly).toStringAsFixed(2)} por cota , são necessárias ${((widget.formInfo['mensalValue'] / profitPerQuoteMontly).round()).toStringAsFixed(0)} cotas aproximadamente.',
+              style: const TextStyle(fontSize: 16, color: Colors.blue),
+            ),
+            const SizedBox(
+              height: 30,
             ),
             const SizedBox(
               height: 30,

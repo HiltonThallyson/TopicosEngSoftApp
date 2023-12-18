@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
           title: const Text('Simule seu investimento'),
           bottom: const TabBar(tabs: [
             Tab(text: 'LCI/CDB'),
-            Tab(text: 'IMOVÉIS'),
+            Tab(text: 'FIIs'),
           ]),
         ),
         body: const TabBarView(children: [

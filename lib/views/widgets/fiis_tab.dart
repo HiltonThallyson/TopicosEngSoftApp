@@ -15,17 +15,21 @@ class _FiisTabState extends State<FiisTab> {
   int duration = 1;
   final formKey = GlobalKey<FormState>();
   final rentabilityController = TextEditingController();
-  final valueController = TextEditingController();
-  final periodController = TextEditingController();
+  final cotaValueController = TextEditingController();
+  final cotaQuantityController = TextEditingController();
+  final mensalValueController = TextEditingController();
 
   @override
   void initState() {
     formInfo['rentability'] = 0.0;
-    formInfo['value'] = 0.0;
     formInfo['period'] = 1;
+    formInfo['cotaValue'] = 0;
+    formInfo['cotaQuantity'] = 1;
+    formInfo['mensalValue'] = 0;
     rentabilityController.text = '';
-    valueController.text = '';
-    periodController.text = '';
+    cotaValueController.text = '';
+    cotaQuantityController.text = '';
+    mensalValueController.text = '';
     isResultMode = false;
     super.initState();
   }
@@ -35,8 +39,10 @@ class _FiisTabState extends State<FiisTab> {
       return;
     }
     formInfo['rentability'] = double.parse(rentabilityController.text) / 100;
-    formInfo['value'] = double.parse(valueController.text);
-    formInfo['period'] = duration;
+    formInfo['cotaValue'] = double.parse(cotaValueController.text);
+    formInfo['cotaQuantity'] = int.parse(cotaQuantityController.text);
+    formInfo['mensalValue'] = double.parse(mensalValueController.text);
+
     setState(() {
       isResultMode = true;
     });
@@ -96,13 +102,14 @@ class _FiisTabState extends State<FiisTab> {
                     //   ),
                     // ),
                     TextFormField(
-                      controller: valueController,
+                      keyboardType: TextInputType.number,
+                      controller: cotaValueController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           hintText: 'R\$',
-                          labelText: 'Valor'),
+                          labelText: 'Valor da cota'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Insira um valor';
@@ -119,15 +126,65 @@ class _FiisTabState extends State<FiisTab> {
                     const SizedBox(
                       height: 15,
                     ),
-
                     TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: cotaQuantityController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          hintText: 'Quantidade',
+                          labelText: 'Quantidade de cotas'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Insira um valor';
+                        }
+
+                        if (value.isNotEmpty) {
+                          if (int.parse(value) <= 0) {
+                            return 'Insira um valor válido';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: rentabilityController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
-                          hintText: '% anual',
-                          labelText: 'Rentabilidade anual'),
+                          hintText: '% anual cota',
+                          labelText: 'Rentabilidade anual por cota'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Insira um valor';
+                        }
+
+                        if (value.isNotEmpty) {
+                          if (double.parse(value) < 0) {
+                            return 'Insira um valor válido';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: mensalValueController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          hintText: 'Quanto quer ganhar por mês',
+                          labelText: 'Rendimento mensal desejado'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Insira um valor';
@@ -145,33 +202,6 @@ class _FiisTabState extends State<FiisTab> {
                       height: 15,
                     ),
 
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          const Text('Selecione a duração: '),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          DropdownButton(
-                              alignment: Alignment.centerLeft,
-                              value: duration,
-                              items: const [
-                                DropdownMenuItem(
-                                    value: 1, child: Text('1 ano')),
-                                DropdownMenuItem(
-                                    value: 2, child: Text('2 anos')),
-                                DropdownMenuItem(
-                                    value: 3, child: Text('3 anos')),
-                              ],
-                              onChanged: (duration) =>
-                                  changeDuration(duration!)),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
                     ElevatedButton(
                         onPressed: validateForm, child: const Text('SIMULAR'))
                   ],

@@ -116,7 +116,9 @@ class _CdbLciResultsState extends State<CdbLciResults> {
                       style: const TextStyle(color: Colors.green),
                     ),
                     Text(
-                        'Valor final: R\$ ${finalValueCdb.toStringAsFixed(2)}'),
+                      'Valor final: R\$ ${finalValueCdb.toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.blue),
+                    ),
                   ],
                 ),
               ),
@@ -141,7 +143,9 @@ class _CdbLciResultsState extends State<CdbLciResults> {
                       style: const TextStyle(color: Colors.green),
                     ),
                     Text(
-                        'Valor final: R\$ ${finalValueLci.toStringAsFixed(2)}'),
+                      'Valor final: R\$ ${finalValueLci.toStringAsFixed(2)}',
+                      style: const TextStyle(color: Colors.blue),
+                    ),
                   ],
                 ),
               ),
@@ -150,9 +154,8 @@ class _CdbLciResultsState extends State<CdbLciResults> {
               height: 30,
             ),
             Text(
-              'Para um lucro igual ao LCI com CDB seria necessário uma rentabilidade de ${(widget.formInfo['rentabilityLci'] / (1 - irPercentage) * 100).toStringAsFixed(2)} %.',
+              'Para um lucro próximo ao da LCI com CDB seria necessário, aproximadamente, uma rentabilidade de ${(widget.formInfo['rentabilityLci'] / (1 - irPercentage) * 100).toStringAsFixed(2)} %.',
               style: const TextStyle(fontSize: 16, color: Colors.blue),
-              // : 'Para um lucro igual com LCI seria necessário uma rentabilidade de ${((widget.formInfo['rentabilityCdb'] * (1 - irPercentage)) * 100).toStringAsFixed(2)} %.'),
             ),
             const SizedBox(
               height: 30,

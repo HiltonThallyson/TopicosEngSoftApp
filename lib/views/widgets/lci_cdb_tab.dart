@@ -112,6 +112,7 @@ class _LciCdbTabState extends State<LciCdbTab> {
                     //   ),
                     // ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: cdiController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -136,6 +137,7 @@ class _LciCdbTabState extends State<LciCdbTab> {
                       height: 15,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: rentabilityCdbController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -160,6 +162,7 @@ class _LciCdbTabState extends State<LciCdbTab> {
                       height: 15,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: rentabilityLciController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -184,6 +187,7 @@ class _LciCdbTabState extends State<LciCdbTab> {
                       height: 15,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       controller: valueController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
