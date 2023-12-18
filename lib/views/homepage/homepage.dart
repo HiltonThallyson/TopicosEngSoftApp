@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/fiis_tab.dart';
 import '../widgets/lci_cdb_tab.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: const TabBarView(children: [
           LciCdbTab(),
-          ColoredBox(color: Colors.blue),
+          FiisTab(),
         ]),
       ),
     );

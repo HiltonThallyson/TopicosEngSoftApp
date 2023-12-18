@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
 
-import 'cdb_lci_results.dart';
+import 'fiis_results.dart';
 
-class LciCdbTab extends StatefulWidget {
-  const LciCdbTab({super.key});
+class FiisTab extends StatefulWidget {
+  const FiisTab({super.key});
 
   @override
-  State<LciCdbTab> createState() => _LciCdbTabState();
+  State<FiisTab> createState() => _FiisTabState();
 }
 
-class _LciCdbTabState extends State<LciCdbTab> {
+class _FiisTabState extends State<FiisTab> {
   Map<String, dynamic> formInfo = {};
   bool isResultMode = false;
   int duration = 1;
   final formKey = GlobalKey<FormState>();
-  final rentabilityCdbController = TextEditingController();
-  final rentabilityLciController = TextEditingController();
+  final rentabilityController = TextEditingController();
   final valueController = TextEditingController();
   final periodController = TextEditingController();
-  final cdiController = TextEditingController();
 
   @override
   void initState() {
-    formInfo['cdi'] = 0.0;
-    formInfo['rentabilityCdb'] = 0.0;
-    formInfo['rentabilityLci'] = 0.0;
+    formInfo['rentability'] = 0.0;
     formInfo['value'] = 0.0;
     formInfo['period'] = 1;
-    cdiController.text = '';
-    rentabilityCdbController.text = '';
-    rentabilityLciController.text = '';
+    rentabilityController.text = '';
     valueController.text = '';
     periodController.text = '';
     isResultMode = false;
@@ -40,11 +34,7 @@ class _LciCdbTabState extends State<LciCdbTab> {
     if (!formKey.currentState!.validate()) {
       return;
     }
-    formInfo['cdi'] = double.parse(cdiController.text) / 100;
-    formInfo['rentabilityCdb'] =
-        double.parse(rentabilityCdbController.text) / 100;
-    formInfo['rentabilityLci'] =
-        double.parse(rentabilityLciController.text) / 100;
+    formInfo['rentability'] = double.parse(rentabilityController.text) / 100;
     formInfo['value'] = double.parse(valueController.text);
     formInfo['period'] = duration;
     setState(() {
@@ -58,12 +48,6 @@ class _LciCdbTabState extends State<LciCdbTab> {
       print('$key = $value');
     });
   }
-
-  // void switchMode(MODE mode) {
-  //   setState(() {
-  //     selectedMode = mode;
-  //   });
-  // }
 
   void changeDuration(int selectedDuration) {
     setState(() {
@@ -80,7 +64,7 @@ class _LciCdbTabState extends State<LciCdbTab> {
   @override
   Widget build(BuildContext context) {
     return isResultMode
-        ? CdbLciResults(
+        ? FiisResults(
             formInfo: formInfo,
             returnToForm: changeScreen,
           )
@@ -112,78 +96,6 @@ class _LciCdbTabState extends State<LciCdbTab> {
                     //   ),
                     // ),
                     TextFormField(
-                      controller: cdiController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          hintText: '% cdi',
-                          labelText: 'CDI'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Insira um valor';
-                        }
-
-                        if (value.isNotEmpty) {
-                          if (double.parse(value) < 0) {
-                            return 'Insira um valor válido';
-                          }
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: rentabilityCdbController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          hintText: '% cdb',
-                          labelText: 'Rentabilidade Cdb'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Insira um valor';
-                        }
-
-                        if (value.isNotEmpty) {
-                          if (double.parse(value) < 0) {
-                            return 'Insira um valor válido';
-                          }
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
-                      controller: rentabilityLciController,
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15))),
-                          hintText: '% lci',
-                          labelText: 'Rentabilidade Lci'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Insira um valor';
-                        }
-
-                        if (value.isNotEmpty) {
-                          if (double.parse(value) < 0) {
-                            return 'Insira um valor válido';
-                          }
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    TextFormField(
                       controller: valueController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(
@@ -207,6 +119,32 @@ class _LciCdbTabState extends State<LciCdbTab> {
                     const SizedBox(
                       height: 15,
                     ),
+
+                    TextFormField(
+                      controller: rentabilityController,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          hintText: '% anual',
+                          labelText: 'Rentabilidade anual'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Insira um valor';
+                        }
+
+                        if (value.isNotEmpty) {
+                          if (double.parse(value) < 0) {
+                            return 'Insira um valor válido';
+                          }
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Row(
@@ -238,5 +176,6 @@ class _LciCdbTabState extends State<LciCdbTab> {
                         onPressed: validateForm, child: const Text('SIMULAR'))
                   ],
                 )));
+    ;
   }
 }
